@@ -34,10 +34,8 @@ show_rathrplot <- function(epcdata, bay_segment = c('OTB', 'HB', 'MTB', 'LTB'), 
 
   # axis label
   if(labelexp)
-    axlab <- dplyr::case_when(
-      thr == 'chla' ~ expression("Mean Ann. Chl-a ("~ mu * "g\u00B7L"^-1 *")"),
-      thr == 'la' ~ expression("Mean Ann. Light Att. (m  " ^-1 *")")
-    )
+    axlab <- ifelse(thr == 'chla', expression("Mean Ann. Chl-a ("~ mu * "g\u00B7L"^-1 *")"),
+                    ifelse(thr == 'la', expression("Mean Ann. Light Att. (m  " ^-1 *")"), NA))
   if(!labelexp)
     axlab <- dplyr::case_when(
       thr == 'chla' ~ "Mean Ann. Chl-a (ug/L)",
