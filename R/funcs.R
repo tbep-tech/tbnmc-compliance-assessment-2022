@@ -187,7 +187,7 @@ ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so f
       ),
       met = val >= chla_thresh,
       out1 = ifelse(met, 'Yes', 'No'),
-      out1 = ifelse(is.na(met), '', paste0(round(val, 1), ' (', out1, ')')),
+      out1 = ifelse(is.na(met), '', paste0(out1, ' (', round(val, 1), ')')),
       out1col = case_when(
         grepl('No', out1) ~ 'lightgreen',
         grepl('Yes', out1) ~ '#FF6347',
