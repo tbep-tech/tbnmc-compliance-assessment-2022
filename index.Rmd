@@ -281,7 +281,7 @@ grid.arrange(
 show_sitemap(wqdat, yrsel = maxyr, thrs = T)
 ```
 
-```{r boxplot, fig.cap = paste0(maxyr, ' monthly chlorophyll-a bay segment means (red dots) compared to monthly distributions from 1972-', maxyr -  1, ' (box plots and black dots).  Boxes encompass the 25th and 75th percentiles, while whiskers bound the interquartile range. Dots beyond the whiskers represent outliers throughout the 1972-', maxyr -1, ' sample period. April, May data missing for 2020.'), fig.height = 9, fig.width = 12, fig.align = 'center'}
+```{r boxplot, fig.cap = paste0(maxyr, ' monthly chlorophyll-a bay segment means (red dots) compared to monthly distributions from 1972-', maxyr -  1, ' (box plots and black dots).  Boxes encompass the 25th and 75th percentiles, while whiskers bound the interquartile range. Dots beyond the whiskers represent outliers throughout the 1972-', maxyr -1, ' sample period.'), fig.height = 9, fig.width = 12, fig.align = 'center'}
 yrrng <- c(1975, maxyr)
 txtcol <- 'black'
 thrthm <- theme(
