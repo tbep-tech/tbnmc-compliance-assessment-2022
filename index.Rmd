@@ -277,7 +277,7 @@ grid.arrange(
 )
 ```
 
-```{r sitemap, fig.cap = 'Map depicting individual station chlorophyll-a exceedences in Tampa Bay relative to FDEP regulatory thresholds for chlorophyll-a in ', maxyr, '. *Note individual station exceedences do not indicate failed compliance at the bay segment scale.*', fig.align = 'center', fig.height=8, fig.width=5, out.width = "70%"}
+```{r sitemap, fig.cap = paste0('Map depicting individual station chlorophyll-a exceedences in Tampa Bay relative to FDEP regulatory thresholds for chlorophyll-a in ', maxyr, '. *Note individual station exceedences do not indicate failed compliance at the bay segment scale.*'), fig.align = 'center', fig.height=8, fig.width=5, out.width = "70%"}
 show_sitemap(wqdat, yrsel = maxyr, thrs = T)
 ```
 
