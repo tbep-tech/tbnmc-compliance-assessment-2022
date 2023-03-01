@@ -12,15 +12,21 @@ library(tibble)
 
 totab <- tibble(
   first = c('TO:', '', 'FROM:', 'DATE:', 'SUBJECT:', 'cc', '', '', '', ''),
-  second = c('Adam Blalock, FDEP', 'Daniel Blackman, US EPA Region 4', 'Ed Sherwood, TBEP Executive Director (NMC Facilitator)',
-Sys.Date(), paste(params$maxyr, 'Tampa Bay Nutrient Management Compliance Assessment Results'), 'Ken Weaver, Jessica Mostyn, Ben Ralys, Kevin O’Donnell, Kimberly Shugar (FDEP Tallahssee)', 'Ramandeep Kaur, Vishwas Sathe, Jessica Pein, Astrid Flores Thiebaud (FDEP Tampa)', 'Jeaneanne M. Gettle, Wade Lehmann, Jeffrey Lerner, Nancy Laurson, Felicia Burks, Tom McGill (EPA Region 4/HQ)', 'Jeff Greenwell, Santino Provenzano, Tony Janicki, Ray Pribble (TBNMC)', 'Ed Sherwood, Maya Burke, Marcus Beck (TBEP)')
+  second = c(
+    'Adam Blalock, FDEP', 'Daniel Blackman, US EPA Region 4', 'Ed Sherwood, TBEP Executive Director (NMC Facilitator)',
+    as.character(Sys.Date()), paste(params$maxyr, 'Tampa Bay Nutrient Management Compliance Assessment Results'), 
+    'Ken Weaver, Jessica Mostyn, Ben Ralys, Kevin O’Donnell, Kimberly Shugar (FDEP Tallahssee)', 
+    'Ramandeep Kaur, Vishwas Sathe, Jessica Pein, Astrid Flores Thiebaud (FDEP Tampa)', 
+    'Jeaneanne M. Gettle, Wade Lehmann, Jeffrey Lerner, Nancy Laurson, Felicia Burks, Tom McGill (EPA Region 4/HQ)', 
+    'Jeff Greenwell, Santino Provenzano, Tony Janicki, Ray Pribble (TBNMC)', 'Ed Sherwood, Maya Burke, Marcus Beck (TBEP)'
+  )
 )
 
 flextable(totab) %>% 
   width(j = 1, 1) %>% 
   width(j = 2, 5) %>% 
+  fontsize(i = 6:10, size = 10) %>% 
   delete_part('header') %>% 
-  delete_part('footer') %>% 
   border_remove()
 ```
 

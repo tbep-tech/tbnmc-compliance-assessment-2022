@@ -217,62 +217,105 @@ ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so f
     ) %>%
     filter(yr > 2016)
 
-  out <- paste0('
-      <table border="1" style="background-color:lightblue;text-align:center;color:black">
-        <col width = "500">
-        <col width = "100">
-        <col width = "100">
-        <col width = "100">
-        <col width = "100">
-        <col width = "100">
-        <col width = "400">
-        <tr>
-          <td rowspan="2">Bay Segment Reasonable Assurance Assessment Steps</td>
-          <td colspan="5">DATA USED TO ASSESS ANNUAL REASONABLE ASSURANCE</td>
-          <td rowspan="2">OUTCOME</td>
-        </tr>
-        <tr>
-          <td>Year 1 (2022)</td>
-          <td>Year 2 (2023)</td>
-          <td>Year 3 (2024)</td>
-          <td>Year 4 (2025)</td>
-          <td>Year 5 (2026)</td>
-        </tr>
-        <tr>
-          <td style="text-align:left"><b>NMC Action 1:</b> Determine if observed chlorophyll-a exceeds FDEP threshold of ', trgs$chla_thresh, ' ug/L</td>
-          <td style="background-color:', avedat[avedat$yr == 2022, 'out1col'], '">', avedat[avedat$yr == 2022, "out1"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2023, 'out1col'], '">', avedat[avedat$yr == 2023, "out1"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2024, 'out1col'], '">', avedat[avedat$yr == 2024, "out1"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2025, 'out1col'], '">', avedat[avedat$yr == 2025, "out1"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2026, 'out1col'], '">', avedat[avedat$yr == 2026, "out1"], '</td>
-          <td style="text-align:left">', outtxt1, '</td>
-        </tr>
-        <tr>
-          <td style="text-align:left"><b>NMC Action 2:</b> Determine if any observed chlorophyll-<i>a</i> exceedences occurred for 2 consecutive years</td>
-          <td style="background-color:', avedat[avedat$yr == 2022, 'sumscol'], '">', avedat[avedat$yr == 2022, "sums"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2023, 'sumscol'], '">', avedat[avedat$yr == 2023, "sums"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2024, 'sumscol'], '">', avedat[avedat$yr == 2024, "sums"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2025, 'sumscol'], '">', avedat[avedat$yr == 2025, "sums"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2026, 'sumscol'], '">', avedat[avedat$yr == 2026, "sums"], '</td>
-          <td style="text-align:left">', outtxt2, '</td>
-        </tr>
-        <tr>
-          <td style="text-align:left"><b>NMC Action 3:</b> Determine if observed hydrologically-normalized total load exceeds federally-recognized TMDL of ', hydroload, ' tons/year </td>
-          <td style="background-color:', avedat[avedat$yr == 2022, 'act3col'], '">', avedat[avedat$yr == 2022, "act3"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2023, 'act3col'], '">', avedat[avedat$yr == 2023, "act3"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2024, 'act3col'], '">', avedat[avedat$yr == 2024, "act3"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2025, 'act3col'], '">', avedat[avedat$yr == 2025, "act3"], '</td>
-          <td style="background-color:', avedat[avedat$yr == 2026, 'act3col'], '">', avedat[avedat$yr == 2026, "act3"], '</td>
-          <td style="text-align:left">', outtxt3, '</td>
-        </tr>
-        <tr>
-          <td style="text-align:left" colspan="6"><b>NMC Actions 4-5</b>: Determine if any entity/source/facility specific exceedences of 5-yr average allocation occurred during implementation period</td>
-          <td style="text-align:left">', outtxt45, '</td>
-        </tr>
-      </table>
-      ')
+  totab <- tibble(
+    col1 = c(
+      'Bay Segment Reasonable Assurance Assessment Steps',
+      NA,
+      paste('NMC Action 1: Determine if observed chlorophyll-a exceeds FDEP threshold of', trgs$chla_thresh, 'ug/L'),
+      'NMC Action 2: Determine if any observed chlorophyll-<i>a</i> exceedences occurred for 2 consecutive years',
+      paste('NMC Action 3: Determine if observed hydrologically-normalized total load exceeds federally-recognized TMDL of ', hydroload, 'tons/year '),
+      'NMC Actions 4-5: Determine if any entity/source/facility specific exceedences of 5-yr average allocation occurred during implementation period'
+      ),
+    col2 = c(
+      'DATA USED TO ASSESS ANNUAL REASONABLE ASSURANCE',
+      'Year 1 (2022)', NA, NA, NA, NA
+    ),
+    col3 = c(
+      NA, 'Year 2 (2023)', NA, NA, NA, NA
+    ),
+    col4 = c(
+      NA, 'Year 3 (2024)', NA, NA, NA, NA
+    ),
+    col5 = c(
+      NA, 'Year 4 (2025)', NA, NA, NA, NA
+    ),
+    col6 = c(
+      NA, 'Year 5 (2026)', NA, NA, NA, NA
+    ),
+    col7 = c(
+      'OUTCOME', NA, outtxt1, outtxt2, outtxt3, outtxt45
+    )
+  )
 
-  out <- htmltools::HTML(out)
+  out <- flextable(totab) %>%
+    delete_part('header') %>%
+    border_inner() %>%
+    border_outer() %>%
+    merge_at(i = 1:2, j = 1) %>%
+    merge_at(i = 1, j = 2:6) %>%
+    merge_at(i = 1:2, j = 7) %>%
+    merge_at(i = 6, j = 1:6) %>%
+    width(j = 1, width = 2, unit = 'in') %>%
+    width(j = 2:6, width = 3 / 5, unit = 'in') %>%
+    width(j = 7, width = 1.5, unit = 'in') %>%
+
+  return(out)
+  # out <- paste0('
+  #     <table border="1" style="background-color:lightblue;text-align:center;color:black">
+  #       <col width = "500">
+  #       <col width = "100">
+  #       <col width = "100">
+  #       <col width = "100">
+  #       <col width = "100">
+  #       <col width = "100">
+  #       <col width = "400">
+  #       <tr>
+  #         <td rowspan="2">Bay Segment Reasonable Assurance Assessment Steps</td>
+  #         <td colspan="5">DATA USED TO ASSESS ANNUAL REASONABLE ASSURANCE</td>
+  #         <td rowspan="2">OUTCOME</td>
+  #       </tr>
+  #       <tr>
+  #         <td>Year 1 (2022)</td>
+  #         <td>Year 2 (2023)</td>
+  #         <td>Year 3 (2024)</td>
+  #         <td>Year 4 (2025)</td>
+  #         <td>Year 5 (2026)</td>
+  #       </tr>
+  #       <tr>
+  #         <td style="text-align:left"><b>NMC Action 1:</b> Determine if observed chlorophyll-a exceeds FDEP threshold of ', trgs$chla_thresh, ' ug/L</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2022, 'out1col'], '">', avedat[avedat$yr == 2022, "out1"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2023, 'out1col'], '">', avedat[avedat$yr == 2023, "out1"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2024, 'out1col'], '">', avedat[avedat$yr == 2024, "out1"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2025, 'out1col'], '">', avedat[avedat$yr == 2025, "out1"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2026, 'out1col'], '">', avedat[avedat$yr == 2026, "out1"], '</td>
+  #         <td style="text-align:left">', outtxt1, '</td>
+  #       </tr>
+  #       <tr>
+  #         <td style="text-align:left"><b>NMC Action 2:</b> Determine if any observed chlorophyll-<i>a</i> exceedences occurred for 2 consecutive years</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2022, 'sumscol'], '">', avedat[avedat$yr == 2022, "sums"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2023, 'sumscol'], '">', avedat[avedat$yr == 2023, "sums"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2024, 'sumscol'], '">', avedat[avedat$yr == 2024, "sums"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2025, 'sumscol'], '">', avedat[avedat$yr == 2025, "sums"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2026, 'sumscol'], '">', avedat[avedat$yr == 2026, "sums"], '</td>
+  #         <td style="text-align:left">', outtxt2, '</td>
+  #       </tr>
+  #       <tr>
+  #         <td style="text-align:left"><b>NMC Action 3:</b> Determine if observed hydrologically-normalized total load exceeds federally-recognized TMDL of ', hydroload, ' tons/year </td>
+  #         <td style="background-color:', avedat[avedat$yr == 2022, 'act3col'], '">', avedat[avedat$yr == 2022, "act3"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2023, 'act3col'], '">', avedat[avedat$yr == 2023, "act3"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2024, 'act3col'], '">', avedat[avedat$yr == 2024, "act3"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2025, 'act3col'], '">', avedat[avedat$yr == 2025, "act3"], '</td>
+  #         <td style="background-color:', avedat[avedat$yr == 2026, 'act3col'], '">', avedat[avedat$yr == 2026, "act3"], '</td>
+  #         <td style="text-align:left">', outtxt3, '</td>
+  #       </tr>
+  #       <tr>
+  #         <td style="text-align:left" colspan="6"><b>NMC Actions 4-5</b>: Determine if any entity/source/facility specific exceedences of 5-yr average allocation occurred during implementation period</td>
+  #         <td style="text-align:left">', outtxt45, '</td>
+  #       </tr>
+  #     </table>
+  #     ')
+  #
+  # out <- htmltools::HTML(out)
 
   return(out)
 
