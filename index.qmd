@@ -1,0 +1,35 @@
+---
+params:
+  maxyr: 2022
+---
+
+![](www/header.png)
+<center><h1 style="font-size:180%">THE TAMPA BAY NITROGEN MANAGEMENT CONSORTIUM PARTNERSHIP FOR PROGRESS<h1></center>
+
+```{r}
+library(flextable)
+library(tibble)
+
+totab <- tibble(
+  first = c('TO:', '', 'FROM:', 'DATE:', 'SUBJECT:', 'cc', '', '', '', ''),
+  second = c('Adam Blalock, FDEP', 'Daniel Blackman, US EPA Region 4', 'Ed Sherwood, TBEP Executive Director (NMC Facilitator)',
+Sys.Date(), paste(params$maxyr, 'Tampa Bay Nutrient Management Compliance Assessment Results'), 'Ken Weaver, Jessica Mostyn, Ben Ralys, Kevin O’Donnell, Kimberly Shugar (FDEP Tallahssee)', 'Ramandeep Kaur, Vishwas Sathe, Jessica Pein, Astrid Flores Thiebaud (FDEP Tampa)', 'Jeaneanne M. Gettle, Wade Lehmann, Jeffrey Lerner, Nancy Laurson, Felicia Burks, Tom McGill (EPA Region 4/HQ)', 'Jeff Greenwell, Santino Provenzano, Tony Janicki, Ray Pribble (TBNMC)', 'Ed Sherwood, Maya Burke, Marcus Beck (TBEP)')
+)
+
+flextable(totab) %>% 
+  width(j = 1, 1) %>% 
+  width(j = 2, 5) %>% 
+  delete_part('header') %>% 
+  delete_part('footer') %>% 
+  border_remove()
+```
+
+Source content: [here](https://github.com/tbep-tech/tbnmc-compliance-assessment-2022)
+
+On behalf of the Tampa Bay Nitrogen Management Consortium, please find attached the 2022 update on water quality and seagrass resources in the Tampa Bay estuary. This update has been developed in accordance with the compliance assessment adopted through [FDEP’s Tampa Bay Reasonable Assurance determination on December 22, 2010](https://drive.google.com/file/d/1wV3w8ack_fLNK3yS-xTR7LTmziNtZ8CN/view?usp=share_link), FDEP’s subsequent approval of the [2022 RA Update](https://drive.google.com/file/d/1IIloBN5RoZPB6vgWzEjmMQyFjFL3fq0Y/view?usp=share_link), and the [federally-recognized TMDL for Tampa Bay](https://drive.google.com/file/d/18_W1qKT2I0j9m0mLC7wWjndSNR-0iWEF/view?usp=share_link). The formal annual compliance assessment utilized by the Consortium is detailed in Section VIII.B of the [Final 2009 Reasonable Assurance Addendum: Allocation and Assessment Report](https://drive.google.com/file/d/10IjJAfcGFf007a5VdPXAUtUi4dx-cmsA/view).
+
+Chlorophyll-a concentrations for all four major bay segments were below FDEP-approved numeric nutrient criteria thresholds in 2022. The approved chlorophyll-a thresholds were adopted as part of FDEP’s 2002 Reasonable Assurance determination for Tampa Bay, and, at that time, it was determined that Tampa Bay’s seagrass restoration goals could be achieved if annual, uncorrected chlorophyll-a concentrations remained below these thresholds. If a bay segment’s chlorophyll-a concentration remains above thresholds for 2 concurrent years, additional compliance assessment steps are required by the Consortium. This nutrient management strategy has been consistently used by the TBEP and Consortium in their Annual Decision Matrix and Assessment reports [@tbep0323].
+
+Seagrass coverage in Tampa Bay decreased between 2020 and 2022, prior to the reported chlorophyll-a conditions detailed above. The Southwest Florida Water Management District's (SWFWMD) 2022 baywide seagrass coverage estimate is 30,137 acres, remaining below the baywide target of 40,000 acres (Figure \@ref(fig:seagrass)). The 2022 estimate marks the third consecutive reporting period with a reduction of seagrass coverage in Tampa Bay. Losses were primarily observed in upper bay segments and additional research, assimilative capacity assessments, and restoration initiatives are being conducted in response to these trends. Notwithstanding these setbacks, the Consortium’s approved nutrient management strategy is still required to adaptively manage and address nutrient loading to the Tampa Bay estuary. For the other Tampa Bay segments, water quality remained supportive of seagrass resources, though baywide seagrass losses continue to be examined.
+
+Thank you again for your continued participation in the Consortium’s process.  Please contact Ed Sherwood ([esherwood@tbep.org](mailto:esherwood@tbep.org)) with any questions about the Consortium’s Annual Compliance Assessment.
