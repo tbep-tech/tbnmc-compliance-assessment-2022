@@ -228,19 +228,43 @@ ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so f
     ),
     col2 = c(
       'DATA USED TO ASSESS ANNUAL REASONABLE ASSURANCE',
-      'Year 1 (2022)', NA, NA, NA, NA
+      'Year 1 (2022)',
+      avedat[avedat$yr == 2022, "out1", drop = T],
+      avedat[avedat$yr == 2022, "sums", drop = T],
+      avedat[avedat$yr == 2022, "act3", drop = T],
+      NA
     ),
     col3 = c(
-      NA, 'Year 2 (2023)', NA, NA, NA, NA
+      NA,
+      'Year 2 (2023)',
+      avedat[avedat$yr == 2023, "out1", drop = T],
+      avedat[avedat$yr == 2023, "sums", drop = T],
+      avedat[avedat$yr == 2023, "act3", drop = T],
+      NA
     ),
     col4 = c(
-      NA, 'Year 3 (2024)', NA, NA, NA, NA
+      NA,
+      'Year 3 (2024)',
+      avedat[avedat$yr == 2024, "out1", drop = T],
+      avedat[avedat$yr == 2024, "sums", drop = T],
+      avedat[avedat$yr == 2024, "act3", drop = T],
+      NA
     ),
     col5 = c(
-      NA, 'Year 4 (2025)', NA, NA, NA, NA
+      NA,
+      'Year 4 (2025)',
+      avedat[avedat$yr == 2025, "out1", drop = T],
+      avedat[avedat$yr == 2025, "sums", drop = T],
+      avedat[avedat$yr == 2025, "act3", drop = T],
+      NA
     ),
     col6 = c(
-      NA, 'Year 5 (2026)', NA, NA, NA, NA
+      NA,
+      'Year 5 (2026)',
+      avedat[avedat$yr == 2026, "out1", drop = T],
+      avedat[avedat$yr == 2026, "sums", drop = T],
+      avedat[avedat$yr == 2026, "act3", drop = T],
+      NA
     ),
     col7 = c(
       'OUTCOME', NA, outtxt1, outtxt2, outtxt3, outtxt45
@@ -248,77 +272,36 @@ ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so f
   )
 
  out <- flextable(totab) %>%
+    font(fontname = 'Lato') %>%
     delete_part('header') %>%
     border_inner() %>%
     border_outer() %>%
-    merge_at(i = 1:2, j = 1) %>%
-    merge_at(i = 1, j = 2:6) %>%
-    merge_at(i = 1:2, j = 7) %>%
-    merge_at(i = 6, j = 1:6) %>%
     width(j = 1, width = 2, unit = 'in') %>%
     width(j = 2:6, width = 3 / 5, unit = 'in') %>%
     width(j = 7, width = 1.5, unit = 'in')%>%
-    align(i = c(1, 2), align = 'center') %>%
-    align(j = 3:7, align = 'center') %>%
-    colformat_md()
-
-  return(out)
-  # out <- paste0('
-  #     <table border="1" style="background-color:lightblue;text-align:center;color:black">
-  #       <col width = "500">
-  #       <col width = "100">
-  #       <col width = "100">
-  #       <col width = "100">
-  #       <col width = "100">
-  #       <col width = "100">
-  #       <col width = "400">
-  #       <tr>
-  #         <td rowspan="2">Bay Segment Reasonable Assurance Assessment Steps</td>
-  #         <td colspan="5">DATA USED TO ASSESS ANNUAL REASONABLE ASSURANCE</td>
-  #         <td rowspan="2">OUTCOME</td>
-  #       </tr>
-  #       <tr>
-  #         <td>Year 1 (2022)</td>
-  #         <td>Year 2 (2023)</td>
-  #         <td>Year 3 (2024)</td>
-  #         <td>Year 4 (2025)</td>
-  #         <td>Year 5 (2026)</td>
-  #       </tr>
-  #       <tr>
-  #         <td style="text-align:left"><b>NMC Action 1:</b> Determine if observed chlorophyll-a exceeds FDEP threshold of ', trgs$chla_thresh, ' ug/L</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2022, 'out1col'], '">', avedat[avedat$yr == 2022, "out1"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2023, 'out1col'], '">', avedat[avedat$yr == 2023, "out1"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2024, 'out1col'], '">', avedat[avedat$yr == 2024, "out1"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2025, 'out1col'], '">', avedat[avedat$yr == 2025, "out1"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2026, 'out1col'], '">', avedat[avedat$yr == 2026, "out1"], '</td>
-  #         <td style="text-align:left">', outtxt1, '</td>
-  #       </tr>
-  #       <tr>
-  #         <td style="text-align:left"><b>NMC Action 2:</b> Determine if any observed chlorophyll-<i>a</i> exceedences occurred for 2 consecutive years</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2022, 'sumscol'], '">', avedat[avedat$yr == 2022, "sums"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2023, 'sumscol'], '">', avedat[avedat$yr == 2023, "sums"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2024, 'sumscol'], '">', avedat[avedat$yr == 2024, "sums"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2025, 'sumscol'], '">', avedat[avedat$yr == 2025, "sums"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2026, 'sumscol'], '">', avedat[avedat$yr == 2026, "sums"], '</td>
-  #         <td style="text-align:left">', outtxt2, '</td>
-  #       </tr>
-  #       <tr>
-  #         <td style="text-align:left"><b>NMC Action 3:</b> Determine if observed hydrologically-normalized total load exceeds federally-recognized TMDL of ', hydroload, ' tons/year </td>
-  #         <td style="background-color:', avedat[avedat$yr == 2022, 'act3col'], '">', avedat[avedat$yr == 2022, "act3"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2023, 'act3col'], '">', avedat[avedat$yr == 2023, "act3"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2024, 'act3col'], '">', avedat[avedat$yr == 2024, "act3"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2025, 'act3col'], '">', avedat[avedat$yr == 2025, "act3"], '</td>
-  #         <td style="background-color:', avedat[avedat$yr == 2026, 'act3col'], '">', avedat[avedat$yr == 2026, "act3"], '</td>
-  #         <td style="text-align:left">', outtxt3, '</td>
-  #       </tr>
-  #       <tr>
-  #         <td style="text-align:left" colspan="6"><b>NMC Actions 4-5</b>: Determine if any entity/source/facility specific exceedences of 5-yr average allocation occurred during implementation period</td>
-  #         <td style="text-align:left">', outtxt45, '</td>
-  #       </tr>
-  #     </table>
-  #     ')
-  #
-  # out <- htmltools::HTML(out)
+    align(i = 1:2, align = 'center') %>%
+    align(i = 3:5, j = 2:6, align = 'center') %>%
+    colformat_md() %>%
+    bg(bg = 'lightblue') %>%
+    bg(i = 3, j = 2, bg = avedat[avedat$yr == 2022, 'out1col', drop = T]) %>%
+    bg(i = 4, j = 2, bg = avedat[avedat$yr == 2022, 'sumscol', drop = T]) %>%
+    bg(i = 5, j = 2, bg = avedat[avedat$yr == 2022, 'act3col', drop = T]) %>%
+    bg(i = 3, j = 3, bg = avedat[avedat$yr == 2023, 'out1col', drop = T]) %>%
+    bg(i = 4, j = 3, bg = avedat[avedat$yr == 2023, 'sumscol', drop = T]) %>%
+    bg(i = 5, j = 3, bg = avedat[avedat$yr == 2023, 'act3col', drop = T]) %>%
+    bg(i = 3, j = 4, bg = avedat[avedat$yr == 2024, 'out1col', drop = T]) %>%
+    bg(i = 4, j = 4, bg = avedat[avedat$yr == 2024, 'sumscol', drop = T]) %>%
+    bg(i = 5, j = 4, bg = avedat[avedat$yr == 2024, 'act3col', drop = T]) %>%
+    bg(i = 3, j = 5, bg = avedat[avedat$yr == 2025, 'out1col', drop = T]) %>%
+    bg(i = 4, j = 5, bg = avedat[avedat$yr == 2025, 'sumscol', drop = T]) %>%
+    bg(i = 5, j = 5, bg = avedat[avedat$yr == 2025, 'act3col', drop = T]) %>%
+    bg(i = 3, j = 6, bg = avedat[avedat$yr == 2026, 'out1col', drop = T]) %>%
+    bg(i = 4, j = 6, bg = avedat[avedat$yr == 2026, 'sumscol', drop = T]) %>%
+    bg(i = 5, j = 6, bg = avedat[avedat$yr == 2026, 'act3col', drop = T]) %>%
+    merge_at(i = 1:2, j = 1) %>%
+    merge_at(i = 1, j = 2:6) %>%
+    merge_at(i = 1:2, j = 7) %>%
+    merge_at(i = 6, j = 1:6)
 
   return(out)
 

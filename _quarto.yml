@@ -23,6 +23,8 @@ format:
   pdf:
     documentclass: scrreprt
     latex-auto-install: true
+    pdf-engine: xelatex
+
 
 execute:
   echo: false
