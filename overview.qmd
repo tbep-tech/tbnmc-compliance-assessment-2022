@@ -17,6 +17,7 @@ library(english)
 library(here)
 library(ggfx)
 library(flextable)
+library(ftExtra)
 # library(googlesheets4)
 
 source('R/funcs.R')

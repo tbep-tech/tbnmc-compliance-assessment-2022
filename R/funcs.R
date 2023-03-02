@@ -153,7 +153,7 @@ show_rathrplot <- function(epcdata, bay_segment = c('OTB', 'HB', 'MTB', 'LTB'), 
 }
 
 # reasonable assurance table function
-ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so far, not necessary for NMC Actions 2-5', outtxt2 = "All years met threshold, not necessary for NMC Actions 3-5", outtxt3 = "Not necessary due to observed water quality and seagrass conditions in the bay segment", outtxt45 = "Not necessary when chlorophyll-<i>a</i> threshold met"){
+ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so far, not necessary for NMC Actions 2-5', outtxt2 = "All years met threshold, not necessary for NMC Actions 3-5", outtxt3 = "Not necessary due to observed water quality and seagrass conditions in the bay segment", outtxt45 = "Not necessary when chlorophyll-*a* threshold met"){
 
   trgs <- targets %>%
     filter(bay_segment %in% !!seg) %>%
@@ -221,11 +221,11 @@ ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so f
     col1 = c(
       'Bay Segment Reasonable Assurance Assessment Steps',
       NA,
-      paste('NMC Action 1: Determine if observed chlorophyll-a exceeds FDEP threshold of', trgs$chla_thresh, 'ug/L'),
-      'NMC Action 2: Determine if any observed chlorophyll-<i>a</i> exceedences occurred for 2 consecutive years',
-      paste('NMC Action 3: Determine if observed hydrologically-normalized total load exceeds federally-recognized TMDL of ', hydroload, 'tons/year '),
-      'NMC Actions 4-5: Determine if any entity/source/facility specific exceedences of 5-yr average allocation occurred during implementation period'
-      ),
+      paste('**NMC Action 1:** Determine if observed chlorophyll-a exceeds FDEP threshold of', trgs$chla_thresh, 'ug/L'),
+      '**NMC Action 2:** Determine if any observed chlorophyll-*a* exceedences occurred for 2 consecutive years',
+      paste('**NMC Action 3:** Determine if observed hydrologically-normalized total load exceeds federally-recognized TMDL of ', hydroload, 'tons/year '),
+      '**NMC Actions 4-5:** Determine if any entity/source/facility specific exceedences of 5-yr average allocation occurred during implementation period'
+    ),
     col2 = c(
       'DATA USED TO ASSESS ANNUAL REASONABLE ASSURANCE',
       'Year 1 (2022)', NA, NA, NA, NA
@@ -247,7 +247,7 @@ ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so f
     )
   )
 
-  out <- flextable(totab) %>%
+ out <- flextable(totab) %>%
     delete_part('header') %>%
     border_inner() %>%
     border_outer() %>%
@@ -257,7 +257,10 @@ ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so f
     merge_at(i = 6, j = 1:6) %>%
     width(j = 1, width = 2, unit = 'in') %>%
     width(j = 2:6, width = 3 / 5, unit = 'in') %>%
-    width(j = 7, width = 1.5, unit = 'in') %>%
+    width(j = 7, width = 1.5, unit = 'in')%>%
+    align(i = c(1, 2), align = 'center') %>%
+    align(j = 3:7, align = 'center') %>%
+    colformat_md()
 
   return(out)
   # out <- paste0('
