@@ -188,6 +188,14 @@ show_wqmatrix(wqdat, param = 'chla', yrrng = c(1975, params$maxyr), txtsz = 5, a
 ratabcap('OTB')
 ratab('OTB', params$maxyr, wqdat)#, outtxt1 = 'First, third, fourth, and fifth years (2017, 2019, 2020, 2021) above threshold, necessary for NMC Actions 2-5.', outtxt2 = 'Concurrent years with threshold exceedances occurred (2019, 2020, 2021), necessary for NMC actions 3-5.', outtxt3 = "Review data, check if anomalous events influenced exceedance.")
 ```
+```{r}
+#| label: tbl-raotb
+#| tbl-cap: "Here is a caption"
+ratab('OTB', params$maxyr, wqdat)
+```
+
+Here's a cross-reference to @tbl-raotb.
+
 <br></br>
 
 ```{r results = 'asis'}

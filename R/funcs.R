@@ -153,7 +153,7 @@ show_rathrplot <- function(epcdata, bay_segment = c('OTB', 'HB', 'MTB', 'LTB'), 
 }
 
 # reasonable assurance table function
-ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so far, not necessary for NMC Actions 2-5', outtxt2 = "All years met threshold, not necessary for NMC Actions 3-5", outtxt3 = "Not necessary due to observed water quality and seagrass conditions in the bay segment", outtxt45 = "Not necessary when chlorophyll-*a* threshold met"){
+ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so far, not necessary for NMC Actions 2-5', outtxt2 = "All years met threshold, not necessary for NMC Actions 3-5", outtxt3 = "Not necessary due to observed water quality and seagrass conditions in the bay segment", outtxt45 = "Not necessary when chlorophyll-*a* threshold met", fsz = 13){
 
   trgs <- targets %>%
     filter(bay_segment %in% !!seg) %>%
@@ -272,7 +272,8 @@ ratab <- function(seg, yrsel, epcdata, outtxt1 = 'All years below threshold so f
   )
 
  out <- flextable(totab) %>%
-    font(fontname = 'Lato') %>%
+    font(fontname = 'Lato light', part = 'all') %>%
+    fontsize(size = fsz) %>%
     delete_part('header') %>%
     border_inner() %>%
     border_outer() %>%
@@ -317,5 +318,102 @@ ratabcap <- function(segin){
   out <- paste0("<table><col width = '1200'><caption>(\\#tab:", segin, "outcome) Demonstration of reasonable assurance assessment steps for ", namein, ". Green and red squares indicate outcomes of decision points outlined in the Consortium's reasonable assurance assessment framework (Figure \\@ref(fig:decision)).</caption><tr></tr></table>")
 
   cat(out)
+
+}
+
+# header table with to, from, etc.
+headertab <- function(fsz = 13){
+
+  totab <- tibble(
+    first = c('TO:', '', 'FROM:', 'DATE:', 'SUBJECT:', 'cc', '', '', '', ''),
+    second = c(
+      'Adam Blalock, FDEP', 'Daniel Blackman, US EPA Region 4', 'Ed Sherwood, TBEP Executive Director (NMC Facilitator)',
+      as.character(Sys.Date()), paste(params$maxyr, 'Tampa Bay Nutrient Management Compliance Assessment Results'),
+      'Ken Weaver, Jessica Mostyn, Ben Ralys, Kevin O’Donnell, Kimberly Shugar (FDEP Tallahssee)',
+      'Ramandeep Kaur, Vishwas Sathe, Jessica Pein, Astrid Flores Thiebaud (FDEP Tampa)',
+      'Jeaneanne M. Gettle, Wade Lehmann, Jeffrey Lerner, Nancy Laurson, Felicia Burks, Tom McGill (EPA Region 4/HQ)',
+      'Jeff Greenwell, Santino Provenzano, Tony Janicki, Ray Pribble (TBNMC)', 'Ed Sherwood, Maya Burke, Marcus Beck (TBEP)'
+    )
+  )
+
+  out <- flextable(totab) %>%
+    width(j = 1, 1) %>%
+    width(j = 2, 5.5) %>%
+    fontsize(i = 1:4, size = fsz) %>%
+    fontsize(i = 6:10, size = fsz * 0.8461538) %>%
+    delete_part('header') %>%
+    border_remove() %>%
+    font(fontname = 'Lato light', part = 'all') %>%
+    valign(valign = 'top')
+
+  return(out)
+
+}
+
+nmcstepstab <- function(fsz = 13){
+
+  totab <- tibble(
+    col1 = c(
+      '**Assessment Step**',
+      '**I.** Determine annual bay segment specific chlorophyll-a FDEP threshold attainment as traditionally assessed using the Decision Matrix management strategy developed by the TBEP [@tbep0400].',
+      NA,
+      '**II.** Review data and determine if an anomalous event(s) influenced non-attainment of the bay segment specific chlorophyll-a threshold.',
+      NA,
+      '**III.** Determine if the chlorophyll-a thresholds have been exceeded for <2 consecutive years.',
+      NA,
+      '**IV.** Determine if the bay segment specific federally-recognized TMDL has been achieved using the hydrologically-adjusted compliance assessment outlined in NMC Decision Memo #11 (Appendix 2-11).',
+      NA,
+      '**V.** For a given year or for multiple years, compile and report entity-specific combined source loads in comparison to 5-yr annual average reasonable assurance allocation.'
+    ),
+    col2 = c(
+      '**Result**', '**Yes**', '**No**', '**Yes**', '**No**', '**Yes**', '**No**', '**Yes**', '**No**', '**Compile & Report**'
+    ),
+    col3 = c(
+      '**Action**', '**NMC Action 1**', '**NMC Action 1**', '**NMC Action 2**', '**Go to III**', '**NMC Action 2**', '**Go to IV**', '**NMC Action 3**', '**Go to V**', '**NMC Action 4**'
+    )
+  )
+
+  out <- flextable(totab) %>%
+    font(fontname = 'Lato light', part = 'all') %>%
+    fontsize(size = fsz) %>%
+    delete_part('header') %>%
+    border_inner() %>%
+    border_outer() %>%
+    width(j = 1, 3.5) %>%
+    align(j = 2:3, align = 'center') %>%
+    autofit() %>%
+    merge_at(i = 2:3, j = 1) %>%
+    merge_at(i = 4:5, j = 1) %>%
+    merge_at(i = 6:7, j = 1) %>%
+    merge_at(i = 8:9, j = 1) %>%
+    colformat_md()
+
+  return(out)
+
+}
+
+nmcactionstab <- function(fsz = 13){
+
+  totab <- tibble(
+    col1 = c("NMC Action 1 -", "NMC Action 2 -", "NMC Action 3 -", "NMC Action 4 -"),
+    col2 = c(
+      "A report assessing attainment of bay segment specific chlorophyll-a thresholds using the EPCHC dataset, as traditionally assessed using the Decision Matrix management strategy developed by the TBEP [@tbep0400] will be delivered to FDEP and EPA (this report).",
+      "A report of the anomalous event(s) or data which influenced the bay segment chlorophyll-a exceedence will be delivered to FDEP and EPA, upon review by NMC participants (this report).",
+      "Consider re-evaluation of the bay segment assimilative capacity based on nonattainment of bay segment chlorophyll-a threshold while meeting federally-recognized TMDL.",
+      "If federally-recognized TMDL not achieved, compile results of hydrologic evaluation for FDEP's review and identify potential further actions needed to achieve reasonable assurance for bay segment allocations."
+    )
+  )
+
+  out <- flextable(totab) %>%
+    width(j = 1, 1.5) %>%
+    width(j = 2, 6) %>%
+    colformat_md() %>%
+    font(fontname = 'Lato light', part = 'all') %>%
+    delete_part('header') %>%
+    border_remove() %>%
+    valign(valign = 'top') %>%
+    fontsize(size = fsz)
+
+  return(out)
 
 }

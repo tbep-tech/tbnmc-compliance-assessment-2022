@@ -3,7 +3,7 @@ project:
   output-dir: _book
 
 book:
-  title: "2022 TAMPA BAY REASONABLE ASSURANCE COMPLIANCE ASSESSMENT REPORT"
+  title: "{{< var maxyr >}} TAMPA BAY REASONABLE ASSURANCE COMPLIANCE ASSESSMENT REPORT"
   repo-url: https://github.com/tbep-tech/tbnmc-compliance-assessment-2022
   reader-mode: true
   downloads: pdf
@@ -11,7 +11,7 @@ book:
     - href: index.qmd
       text: THE TAMPA BAY NITROGEN MANAGEMENT CONSORTIUM PARTNERSHIP FOR PROGRESS
     - href: overview.qmd
-      text: OVERIEW OF THE REASONABLE ASSURANCE PROCESS
+      text: "{{< var maxyr >}} Tampa Bay Estuary Nutrient Management Compliance Assessment"
     - references.qmd
 
 bibliography: refs.bib
@@ -20,6 +20,7 @@ format:
   html:
     theme: cosmo
     css: styles.css
+    fontsize: 1.1em
   pdf:
     documentclass: scrreprt
     latex-auto-install: true
