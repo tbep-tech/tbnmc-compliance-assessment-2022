@@ -281,7 +281,7 @@ hydrotab <- function(maxyr, noaa_key, fsz = 13){
     `1992 - 1994 Hydrology (95% Prediction Interval, million m3)` = c('383 - 548', '753-1110', '524-756', '312-402')
   )
 
-  # format for reactable
+  # format
   totab <- hydroload %>%
     left_join(histest, ., by = 'Bay Segment') %>%
     select(-Year, -`Adjusted?`, -`Compliance Load`) %>%

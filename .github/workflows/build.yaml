@@ -33,7 +33,7 @@ jobs:
           packages: |
             any::tidyverse
             any::extrafont
-            any::reactable
+            any::flextable
             any::gridExtra
             any::english
             any::here
