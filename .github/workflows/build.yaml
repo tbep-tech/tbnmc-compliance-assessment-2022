@@ -43,6 +43,7 @@ jobs:
             any::ggsn
             any::ggrepel
             any::knitr
+            any::ftExtra
             tbeptools
       - name: Publish to GitHub Pages (and render)
         uses: quarto-dev/quarto-actions/publish@v2
