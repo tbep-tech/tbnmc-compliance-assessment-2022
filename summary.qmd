@@ -1,217 +1,111 @@
 ---
-title: "Untitled"
-format: html
+title: "{{< var maxyr >}} Results Summary"
+params:
+  maxyr: 2022
+bibliography: refs.bib
 ---
-<center><h1 style="font-size:180%">`r params$maxyr` Results Summary</h1></center>
 
-```{r setup, message = F, warning = F, results = 'hide', echo = F}
-knitr::opts_chunk$set(echo = F, warning = F, message = F, fig.path = 'figure/')
-
+```{r}
 library(tbeptools)
-library(extrafont)
+library(glue)
 library(tidyverse)
-library(reactable)
 library(gridExtra)
 library(grid)
 library(english)
 library(here)
 library(ggfx)
-# library(googlesheets4)
+library(flextable)
+library(ftExtra)
 
 source('R/funcs.R')
 
-loadfonts(device = 'pdf', quiet = T)
-font_import()
-if(Sys.info()[1] == 'Windows')
-  loadfonts(device = 'win', quiet = T)
-
-# # style file
-# styles <- readLines('https://raw.githubusercontent.com/tbep-tech/css-styling/master/styles.css')
-# writeLines(styles, 'styles.css')
-
-levs <- c('Old Tampa Bay', 'Hillsborough Bay', 'Middle Tampa Bay', 'Lower Tampa Bay')
-noaa_key <- Sys.getenv('NOAA_KEY')
 fml <- NA
-
-# # get refs file
-# options(gargle_oauth_email = "mbeck@tbep.org")
-# path <- 'https://docs.google.com/spreadsheets/d/1VvEFlD_dRhp26HeOMz-CyZ5ZG9szMCziBBcniCwrUJg/edit?usp=sharing'
-# sht <- read_sheet(path)
-# sht <- as.data.frame(sht)
-# shtsv <- mutate_all(sht, as.character)
-# write.csv(shtsv, 'tbep-refs.csv', row.names = F)
-# bibs <- anlz_refs(sht)
-# writeLines(bibs, 'bibs.bib')
 
 data(wqdat)
 ```
 
-Results from 2022 indicate that all RA bay segments met chlorophyll-a thresholds accepted by the FDEP to maintain FDEP Reasonable Assurance for Tampa Bay and to comply with the EPA TMDL (Figure \@ref(fig:thrplot)) and estuarine numeric nutrient criteria for Tampa Bay ([EPA Amended Approval Letter Jun. 28, 2013](https://www.epa.gov/sites/default/files/2015-04/documents/florida-amended-determination.pdf)). During the previous RA period (2017-2021), Old Tampa Bay exceeded the chlorophyll-a threshold for four of the five years.  While the chlorophyll-a threshold was met in Old Tampa Bay for the 2022 annual assessment period, water quality conditions in this bay segment remain a priority concern for the Consortium.  Chlorophyll-a concentrations are typically elevated in a poorly flushed region that has produced summertime blooms of *Pyrodinium bahamense* since 2009 (Figure \@ref(fig:sitemap); *Note that individual station exceedences are not considered in this RA compliance assessment*). This observation is reflected in the majority of summertime months with chlorophyll-a concentrations higher than long-term median values in Old Tampa Bay, although this was not observed in 2022 (Figure \@ref(fig:boxplot)). To address these water quality problems, the Consortium formed an Old Tampa Bay Working Group in early 2020 to prioritize additional investigations and future management actions that may alleviate the conditions fostering these summertime blooms. Additionally, the TBEP received funding from a NOAA Restore Actionable Science grant in 2021 to develop a research management plan for identifying potential actions to improve water quality conditions in Old Tampa Bay. The plan will be finalized in early 2023, and a grant proposal was submitted to NOAA for the next research phases outlined in the plan.
+Results from {{< var maxyr >}} indicate that all RA bay segments met chlorophyll-a thresholds accepted by the FDEP to maintain FDEP Reasonable Assurance for Tampa Bay and to comply with the EPA TMDL (@fig-thrplot) and estuarine numeric nutrient criteria for Tampa Bay ([EPA Amended Approval Letter Jun. 28, 2013](https://www.epa.gov/sites/default/files/2015-04/documents/florida-amended-determination.pdf)). During the previous RA period (2017-2021), Old Tampa Bay exceeded the chlorophyll-a threshold for four of the five years.  While the chlorophyll-a threshold was met in Old Tampa Bay for the 2022 annual assessment period, water quality conditions in this bay segment remain a priority concern for the Consortium.  Chlorophyll-a concentrations are typically elevated in a poorly flushed region that has produced summertime blooms of *Pyrodinium bahamense* since 2009 (@fig-sitemap); *Note that individual station exceedences are not considered in this RA compliance assessment*). This observation is reflected in the majority of summertime months with chlorophyll-a concentrations higher than long-term median values in Old Tampa Bay, although this was not observed in 2022 (@fig-boxplot). To address these water quality problems, the Consortium formed an Old Tampa Bay Working Group in early 2020 to prioritize additional investigations and future management actions that may alleviate the conditions fostering these summertime blooms. Additionally, the TBEP received funding from a NOAA Restore Actionable Science grant in 2021 to develop a research management plan for identifying potential actions to improve water quality conditions in Old Tampa Bay. The plan will be finalized in early 2023, and a grant proposal was submitted to NOAA for the next research phases outlined in the plan.
 
 The TBEP, in partnership with the Southwest Florida Water Management District, has previously developed an integrated ecosystem model to evaluate the net environmental benefits that may result from implementing various management actions in Old Tampa Bay including: reducing point sources, nonpoint sources, and causeway obstructions in Old Tampa Bay [@tbep1015]. Management actions that proximate and respond to current Old Tampa Bay conditions will be further evaluated using this model. Furthermore, the TBEP is funding research conducted by the Florida Fish and Wildlife Research Institute to improve understanding of the cell physiology and behavior of *Pyrodinium bahamense* and evaluate the potential for using shellfish to mitigate these algal blooms in Old Tampa Bay.  A water quality dashboard ([https://shiny.tbep.org/wq-dash](https://shiny.tbep.org/wq-dash)) continues to be available to further synthesize available data, assess additional water quality metrics (phytoplankton counts), and inform Consortium participants and other resource managers on the status of water quality in Tampa Bay. The dashboard allows for proactive response to anomalous water quality conditions on a month-to-month basis by the community.
 
 Seagrasses were relatively stable in much of Lower to Middle Tampa Bay; however, additional declines to the ephemeral seagrass beds in upper Tampa Bay were observed between 2020 and 2022. Aerial photographs taken in December 2021 - January 2022 indicated that baywide seagrass coverage decreased by 4,160 acres, marking the third consecutive biennial reporting period with seagrass declines. Seagrass acreage showed the greatest decreases in Old Tampa Bay (-4,041 acres from 2018 - 2020, -2,518 acres from 2020 - 2022) and Hillsborough Bay (-627 acres from 2018 - 2020, -428 acres from 2020 - 2022). Notably, the coverage estimate for Old Tampa Bay was 4,183 acres in 2022, the lowest estimate ever recorded for that bay segment.  The three major southwest Florida estuaries experienced reductions in estimated seagrass coverage between 2020 and 2022, with the most pronounced losses occurring in Tampa Bay. Additional research and discussion is being pursued by the Southwest Florida Seagrass Working Group to better understand the underlying mechanisms influencing these observations. The next SWFWMD seagrass coverage estimate will be developed from aerial photographs acquired over the winter 2023-24 period.
 
-Detailed results for the 2022-2026 RA implementation period are also provided in Tables \@ref(tab:OTBoutcome), \@ref(tab:HBoutcome), \@ref(tab:MTBoutcome), and \@ref(tab:LTBoutcome) for each bay segment. As of the 2022 reporting period, NMC Actions 2-5 are not necessary based upon observed water quality conditions within Tampa Bay, though additional work is being pursued by the TBEP and TBNMC to understand the most recent trends in seagrass coverage and Old Tampa Bay's current assimilative capacity. Individual annual reports of the bay’s conditions from 2022 can be found on the TBEP website, as specified in the following link [@tbep0323]. A summary of historic attainment of the regulatory chlorophyll-a thresholds for each of the bay segments is depicted in Figure \@ref(fig:chlmat).
+Detailed results for the 2022-2026 RA implementation period are also provided in Tables [-@tbl-raotb], [-@tbl-rahb], [-@tbl-ramtb], and [-@tbl-raltb] for each bay segment. As of the {{< var maxyr >}} reporting period, NMC Actions 2-5 are not necessary based upon observed water quality conditions within Tampa Bay, though additional work is being pursued by the TBEP and TBNMC to understand the most recent trends in seagrass coverage and Old Tampa Bay's current assimilative capacity. Individual annual reports of the bay’s conditions from {{< var maxyr >}} can be found on the TBEP website, as specified in the following link [@tbep0323]. A summary of historic attainment of the regulatory chlorophyll-a thresholds for each of the bay segments is depicted in @fig-chlmat.
 
-Lastly, annual hydrologic conditions within two of four bay segments in `r params$maxyr` were estimated to exceed 1992-1994 levels. Therefore, hydrologic adjustments for evaluating compliance with individual entity load allocations/permitting targets should be applied for the Old Tampa Bay and Lower Tampa Bay segments [@tbep0512;@tbep0316]. The estimated hydrologic loads for each bay segment relative to observed 1992-1994 levels are indicated in the table below. The estimated compliance load adjustment factors (if applicable) are also specified. A tool to calculate the hydrologic estimates and adjustment factors by bay segment is available online through an interactive dashboard and automatically updated as provisional hydrologic estimates are approved by monitoring agencies  (https://shiny.tbep.org/tbnmc_hydrologic_estimates/).
+Lastly, annual hydrologic conditions within two of four bay segments in {{< var maxyr >}} were estimated to exceed 1992-1994 levels. Therefore, hydrologic adjustments for evaluating compliance with individual entity load allocations/permitting targets should be applied for the Old Tampa Bay and Lower Tampa Bay segments [@tbep0512;@tbep0316]. The estimated hydrologic loads for each bay segment relative to observed 1992-1994 levels are indicated in the table below. The estimated compliance load adjustment factors (if applicable) are also specified. A tool to calculate the hydrologic estimates and adjustment factors by bay segment is available online through an interactive dashboard and automatically updated as provisional hydrologic estimates are approved by monitoring agencies  (<https://shiny.tbep.org/tbnmc_hydrologic_estimates/>).
 
-```{r, eval = T}
-# get adjustment estimates
-hydroload <- anlz_hydroload(maxyr, noaa_key)
-
-# extra static content
-histest <- tibble::tibble(
-  `Bay Segment` = levs,
-  `1992 - 1994 Hydrology (95% Prediction Interval, million m3)` = c('383 - 548', '753-1110', '524-756', '312-402')
-  )
-
-# format for reactable
-totab <- hydroload %>%
-  left_join(histest, ., by = 'Bay Segment') %>%
-  select(-Year, -`Adjusted?`, -`Compliance Load`) %>%
-  mutate(`Bay Segment` = factor(`Bay Segment`, levels = levs)) %>%
-  arrange(`Bay Segment`)
-
-# reactable output
-tab <- reactable(totab,
-  defaultColDef = colDef(
-    format = colFormat(digits = 2, separators = TRUE),
-    resizable = T
-    )
-)
-
-tab
+```{r}
+hydrotab(params$maxyr, Sys.getenv('NOAA_KEY'))
 ```
 
-```{r thrplot, fig.cap = paste0('Historic chlorophyll-a annual averages for the four major bay segments of Tampa Bay. Annual averages in ', params$maxyr, ' were below the regulatory thresholds developed under the Tampa Nitrogen Management Consortium’s nutrient management strategy in all four bay segments. Vertical grey bars indicate the the 2022-2026 Reasonable Assurance compliance assessment period Data source: EPCHC.'), fig.height = 9, fig.width = 12, fig.align = 'center'}
-
-yrrng <- c(1975, params$maxyr)
-p1 <- show_rathrplot(wqdat, bay_segment = "OTB", thr = "chla", yrrng = yrrng, family = fml, thrs = T)
-p1leg <- g_legend(p1)
-p1 <- p1 + theme(legend.position = 'none')
-p2 <- show_rathrplot(wqdat, bay_segment = "HB", thr = "chla", yrrng = yrrng, family = fml, thrs = T) + theme(legend.position = 'none')
-p3 <- show_rathrplot(wqdat, bay_segment = "MTB", thr = "chla", yrrng = yrrng, family = fml, thrs = T) + theme(legend.position = 'none')
-p4 <- show_rathrplot(wqdat, bay_segment = "LTB", thr = "chla", yrrng = yrrng, family = fml, thrs = T) + theme(legend.position = 'none')
-
-# align
-# Get the widths
-pA <- ggplot_gtable(ggplot_build(p1))
-pB <- ggplot_gtable(ggplot_build(p2))
-pC <- ggplot_gtable(ggplot_build(p3))
-pD <- ggplot_gtable(ggplot_build(p4))
-maxWidth = grid::unit.pmax(pA$widths[2:3], pB$widths[2:3], pD$widths[2:3], pD$widths[2:3])
-
-# Set the widths
-pA$widths[2:3] <- maxWidth
-pB$widths[2:3] <- maxWidth
-pC$widths[2:3] <- maxWidth
-pD$widths[2:3] <- maxWidth
-
-grid.arrange(
-  p1leg,
-  arrangeGrob(pA, pB, ncol = 2),
-  arrangeGrob(pC, pD, ncol = 2),
-  ncol = 1, heights = c(0.1, 1, 1)
-)
+```{r}
+#| label: fig-thrplot
+#| fig-cap: "Historic chlorophyll-a annual averages for the four major bay segments of Tampa Bay. Annual averages in {{< var maxyr >}} were below the regulatory thresholds developed under the Tampa Nitrogen Management Consortium’s nutrient management strategy in all four bay segments. Vertical grey bars indicate the the 2022-2026 Reasonable Assurance compliance assessment period Data source: EPCHC."
+#| fig-align: center
+#| fig-width: 12
+#| fig-height: 9
+show_rachlplot(wqdat, params$maxyr, fml)
 ```
 
-```{r sitemap, fig.cap = paste0('Map depicting individual station chlorophyll-a exceedences in Tampa Bay relative to FDEP regulatory thresholds for chlorophyll-a in ', params$maxyr, '. *Note individual station exceedences do not indicate failed compliance at the bay segment scale.*'), fig.align = 'center', fig.height=8, fig.width=5, out.width = "70%"}
+```{r}
+#| label: fig-sitemap
+#| fig-cap: "Map depicting individual station chlorophyll-a exceedences in Tampa Bay relative to FDEP regulatory thresholds for chlorophyll-a in {{< var maxyr >}}. *Note individual station exceedences do not indicate failed compliance at the bay segment scale.*"
+#| fig-align: center
+#| fig-height: 8
+#| fig-width: 5
+#| out-width: "70%"
 show_sitemap(wqdat, yrsel = params$maxyr, thrs = T)
 ```
 
-```{r boxplot, fig.cap = paste0(params$maxyr, ' monthly chlorophyll-a bay segment means (red dots) compared to monthly distributions from 1972-', params$maxyr -  1, ' (box plots and black dots).  Boxes encompass the 25th and 75th percentiles, while whiskers bound the interquartile range. Dots beyond the whiskers represent outliers throughout the 1972-', params$maxyr -1, ' sample period.'), fig.height = 9, fig.width = 12, fig.align = 'center'}
-yrrng <- c(1975, params$maxyr)
-txtcol <- 'black'
-thrthm <- theme(
-    plot.background = element_rect(fill = NA, color = NA),
-    axis.text.y = element_text(colour = txtcol, size = 12),
-    axis.title = element_blank(),
-    plot.title = element_text(size = 22, colour = txtcol),
-    legend.text = element_text(size = 16, colour = txtcol),
-    axis.text.x = element_text(size = 14, colour = txtcol, angle = 0, hjust = 0.5),
-    text = element_text(family = fml)
-  )
-
-p1 <- show_boxplot(wqdat, bay_segment = "OTB", yrrng = yrrng, yrsel = params$maxyr, family = fml) + thrthm
-p1leg <- g_legend(p1)
-p1 <- p1 + theme(legend.position = 'none')
-p2 <- show_boxplot(wqdat, bay_segment = "HB", yrrng = yrrng, yrsel = params$maxyr, family = fml) + thrthm + theme(legend.position = 'none')
-p3 <- show_boxplot(wqdat, bay_segment = "MTB", yrrng = yrrng, yrsel = params$maxyr, family = fml) + thrthm + theme(legend.position = 'none')
-p4 <- show_boxplot(wqdat, bay_segment = "LTB",  yrrng = yrrng, yrsel = params$maxyr, family = fml) + thrthm + theme(legend.position = 'none')
-
-# align
-# Get the widths
-pA <- ggplot_gtable(ggplot_build(p1))
-pB <- ggplot_gtable(ggplot_build(p2))
-pC <- ggplot_gtable(ggplot_build(p3))
-pD <- ggplot_gtable(ggplot_build(p4))
-maxWidth = grid::unit.pmax(pA$widths[2:3], pB$widths[2:3], pD$widths[2:3], pD$widths[2:3])
-
-# Set the widths
-pA$widths[2:3] <- maxWidth
-pB$widths[2:3] <- maxWidth
-pC$widths[2:3] <- maxWidth
-pD$widths[2:3] <- maxWidth
-
-grid.arrange(
-  p1leg,
-  arrangeGrob(pA, pB, ncol = 2),
-  arrangeGrob(pC, pD, ncol = 2),
-  ncol = 1, heights = c(0.1, 1, 1)
-)
+```{r}
+#| label: fig-boxplot
+#| fig-cap: !expr paste0(params$maxyr, " monthly chlorophyll-a bay segment means (red dots) compared to monthly distributions from 1972-", params$maxyr -  1, " (box plots and black dots).  Boxes encompass the 25th and 75th percentiles, while whiskers bound the interquartile range. Dots beyond the whiskers represent outliers throughout the 1972-", params$maxyr -1, " sample period.")
+#| fig-height: 9
+#| fig-width: 12
+#| fig-align: center
+show_chlboxplot(wqdat, params$maxyr, fml)
 ```
 
-```{r, results = 'hide'}
-png('figure/seagrasscov.png', height = 3.25, width = 6, res = 300, unit = 'in')
-show_seagrasscoverage(seagrass, maxyr = params$maxyr, lastlab = 'acres (Provisional)') # cannot assign to object
-dev.off()
+```{r}
+#| label: fig-seagrass
+#| fig-cap: "Historic seagrass coverage estimates for Tampa Bay. The target coverage of 38,000 acres was changed to 40,000 acres in 2020 to reflect programmatic goals in the 2020 Habitat Master Plan Update ([TBEP #07-20](https://drive.google.com/file/d/1Hp0l_qtbxp1JxKJoGatdyuANSzQrpL0I/view?usp=drivesdk)). Data source: TBEP & SWFWMD."
+#| fig-height: 3.25
+#| fig-width: 6
+#| fig-align: center
+#| out-width: "90%"
+show_seagrasscoverage(seagrass, maxyr = params$maxyr, lastlab = 'acres (Provisional)')
 ```
 
-```{r seagrass, fig.align = 'center', out.width = '90%', fig.cap = 'Historic seagrass coverage estimates for Tampa Bay. The target coverage of 38,000 acres was changed to 40,000 acres in 2020 to reflect programmatic goals in the 2020 Habitat Master Plan Update (<a href="https://drive.google.com/file/d/1Hp0l_qtbxp1JxKJoGatdyuANSzQrpL0I/view?usp=drivesdk">TBEP #07-20</a>). Data source: TBEP & SWFWMD.'}
-knitr::include_graphics('figure/seagrasscov.png')
+```{r}
+#| label: fig-chlmat
+#| fig-cap: "Attainment of adopted chlorophyll-a thresholds (1974 - {{< var maxyr >}} in the four major bay segments.  Green (yes) indicates that average annual chlorophyll-a thresholds were met; red (no) indicates that threshold levels were not met.  Grey line is the beginning of the current Reasonable Assurance implementation period. Data source:  EPCHC."
+#| fig-height: 10
+#| fig-width: 4
+#| fig-align: center
+#| out-width: "30%"
+show_chlmatrix(wqdat, params$maxyr, fml)
 ```
 
-```{r chlmat, fig.align = 'center', out.width = '30%', fig.cap = paste0('Attainment of adopted chlorophyll-a thresholds (1974 - ', params$maxyr, ') in the four major bay segments.  Green (yes) indicates that average annual chlorophyll-a thresholds were met; red (no) indicates that threshold levels were not met.  Grey line is the beginning of the current Reasonable Assurance implementation period. Data source:  EPCHC.'), fig.height = 10, fig.width = 4}
-show_wqmatrix(wqdat, param = 'chla', yrrng = c(1975, params$maxyr), txtsz = 5, abbrev = T, family = fml) +
-  geom_hline(yintercept = 2021.5, size = 2, color = 'grey') +
-  theme(
-    plot.background = element_rect(fill = NA, color = NA),
-    axis.text.y = element_text(size = 14, colour = 'black'),
-    axis.text.x = element_text(size = 14, colour = 'black'),
-    plot.title = element_text(size = 22, colour = 'black'),
-    text = element_text(family = fml)
-  )
-```
-
-```{r results = 'asis'}
-ratabcap('OTB')
-ratab('OTB', params$maxyr, wqdat)#, outtxt1 = 'First, third, fourth, and fifth years (2017, 2019, 2020, 2021) above threshold, necessary for NMC Actions 2-5.', outtxt2 = 'Concurrent years with threshold exceedances occurred (2019, 2020, 2021), necessary for NMC actions 3-5.', outtxt3 = "Review data, check if anomalous events influenced exceedance.")
-```
 ```{r}
 #| label: tbl-raotb
-#| tbl-cap: "Here is a caption"
+#| tbl-cap: !expr ratabcap('OTB')
 ratab('OTB', params$maxyr, wqdat)
 ```
 
-Here's a cross-reference to @tbl-raotb.
-
-<br></br>
-
-```{r results = 'asis'}
-ratabcap('HB')
+```{r}
+#| label: tbl-rahb
+#| tbl-cap: !expr ratabcap('HB')
 ratab('HB', params$maxyr, wqdat)
 ```
-<br></br>
 
-```{r, results = 'asis'}
-ratabcap('MTB')
+```{r}
+#| label: tbl-ramtb
+#| tbl-cap: !expr ratabcap('MTB')
 ratab('MTB', params$maxyr, wqdat)
 ```
-<br></br>
 
-```{r results='asis'}
-ratabcap('LTB')
+```{r}
+#| label: tbl-raltb
+#| tbl-cap: !expr ratabcap('LTB')
 ratab('LTB', params$maxyr, wqdat)
 ```
-<br></br>

@@ -121,6 +121,12 @@ caption {
   color: #000000;
 }
 
+figcaption {
+  font-family: 'Lato';
+  font-weight: 300;
+  color: #000000;
+}
+
 .level1 {
   font-family: 'Lato';
   font-weight: 300;

@@ -33,7 +33,7 @@ Regardless of the assessment results, the Consortium will annually report (by Ju
 
 ```{r}
 #| label: tbl-steps
-#| tbl-cap: "Assessment steps linked to the Nitrogen Management Consortium's decision framework, as depicted in the flowchart above"
+#| tbl-cap: "Assessment steps linked to the Nitrogen Management Consortium's decision framework, as depicted in the flowchart above."
 nmcstepstab()
 ```
 
