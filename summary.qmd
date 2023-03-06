@@ -78,11 +78,11 @@ show_seagrasscoverage(seagrass, maxyr = params$maxyr, lastlab = 'acres (Provisio
 
 ```{r}
 #| label: fig-chlmat
-#| fig-cap: "Attainment of adopted chlorophyll-a thresholds (1974 - {{< var maxyr >}} in the four major bay segments.  Green (yes) indicates that average annual chlorophyll-a thresholds were met; red (no) indicates that threshold levels were not met.  Grey line is the beginning of the current Reasonable Assurance implementation period. Data source:  EPCHC."
+#| fig-cap: "Attainment of adopted chlorophyll-a thresholds (1974 - {{< var maxyr >}}) in the four major bay segments.  Green (yes) indicates that average annual chlorophyll-a thresholds were met; red (no) indicates that threshold levels were not met.  Grey line is the beginning of the current Reasonable Assurance implementation period. Data source:  EPCHC."
 #| fig-height: 10
 #| fig-width: 4
 #| fig-align: center
-#| out-width: "30%"
+#| out-width: "40%"
 show_chlmatrix(wqdat, params$maxyr, fml)
 ```
 

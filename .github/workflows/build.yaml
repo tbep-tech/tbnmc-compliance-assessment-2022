@@ -46,6 +46,7 @@ jobs:
             any::ggmap
             any::ggsn
             any::ggrepel
+            any::knitr
             tbeptools
 
       - name: Render index
