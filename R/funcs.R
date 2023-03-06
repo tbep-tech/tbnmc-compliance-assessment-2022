@@ -225,13 +225,13 @@ nmcstepstab <- function(fsz = 13){
     delete_part('header') %>%
     border_inner() %>%
     border_outer() %>%
-    width(j = 1, 3.5) %>%
     align(j = 2:3, align = 'center') %>%
-    autofit() %>%
     merge_at(i = 2:3, j = 1) %>%
     merge_at(i = 4:5, j = 1) %>%
     merge_at(i = 6:7, j = 1) %>%
     merge_at(i = 8:9, j = 1) %>%
+    width(j = 1, 3.5) %>%
+    width(j = 2:3, 1.5) %>%
     colformat_md()
 
   return(out)
@@ -252,7 +252,7 @@ nmcactionstab <- function(fsz = 13){
 
   out <- flextable(totab) %>%
     width(j = 1, 1.5) %>%
-    width(j = 2, 6) %>%
+    width(j = 2, 5) %>%
     colformat_md() %>%
     font(fontname = 'Lato light', part = 'all') %>%
     delete_part('header') %>%
