@@ -22,9 +22,6 @@ jobs:
           extra-repositories: 'https://tbep-tech.r-universe.dev'
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v2
-      - name: Setup tinytex
-        uses: r-lib/actions/setup-tinytex@v2
-      - run: tlmgr --version
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
@@ -32,6 +29,8 @@ jobs:
           tinytex: true
           # uncomment below and fill to pin a version
           # version: 0.9.600
+      - name: Setup tinytex
+        uses: r-lib/actions/setup-tinytex@v2
       - name: Setup R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
