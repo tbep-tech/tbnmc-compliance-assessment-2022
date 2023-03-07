@@ -273,7 +273,9 @@ hydrotab <- function(maxyr, noaa_key, fsz = 13){
   levs <- c('Old Tampa Bay', 'Hillsborough Bay', 'Middle Tampa Bay', 'Lower Tampa Bay')
 
   # get adjustment estimates
-  hydroload <- anlz_hydroload(maxyr, noaa_key)
+  hydroload <- try(anlz_hydroload(maxyr, noaa_key), silent = T)
+  while(inherits(hydroload, 'try-error'))
+    hydroload <- try(anlz_hydroload(maxyr, noaa_key), silent = T)
 
   # extra static content
   histest <- tibble::tibble(
