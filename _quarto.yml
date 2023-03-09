@@ -26,6 +26,7 @@ format:
   pdf:
     documentclass: scrreprt
     latex-auto-install: true
+    latex-tinytex: false
 
 execute:
   echo: false

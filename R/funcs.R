@@ -232,9 +232,9 @@ nmcstepstab <- function(fsz = 13){
     merge_at(i = 8:9, j = 1) %>%
     width(j = 1, 3.5) %>%
     width(j = 2:3, 1.5) %>%
-    # set_table_properties(
-    #   opts_pdf = list(arraystretch = 3)
-    # ) %>%
+    set_table_properties(
+      opts_pdf = list(arraystretch = 3)
+    ) %>%
     colformat_md()
 
   return(out)
