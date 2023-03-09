@@ -24,7 +24,7 @@ format:
     css: styles.css
     fontsize: 1.1em
   pdf:
-    documentclass: scrreprt
+    documentclass: report
     latex-auto-install: true
     latex-auto-mk: true
 
