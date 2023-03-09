@@ -2,14 +2,6 @@
 title: The Tampa Bay Nitrogen Management Consortium Partnership for Progress
 params:
   maxyr: 2022
-format:
-  pdf:
-    include-in-header: |
-      \usepackage{setspace}
-      \usepackage{array}
-      \usepackage{booktabs}
-      \usepackage{multirow}
-      \usepackage{makecell}
 ---
 
 ![](www/header.png)

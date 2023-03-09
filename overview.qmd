@@ -3,14 +3,6 @@ title: "{{< var maxyr >}} Tampa Bay Estuary Nutrient Management Compliance Asses
 params:
   maxyr: 2022
 bibliography: refs.bib
-format:
-  pdf:
-    include-in-header: |
-      \usepackage{setspace}
-      \usepackage{array}
-      \usepackage{booktabs}
-      \usepackage{multirow}
-      \usepackage{makecell}
 ---
 
 ```{r}
