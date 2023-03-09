@@ -3,12 +3,14 @@ title: "{{< var maxyr >}} Results Summary"
 params:
   maxyr: 2022
 bibliography: refs.bib
-include-in-header: |
-    \usepackage{setspace}
-    \usepackage{array}
-    \usepackage{booktabs}
-    \usepackage{multirow}
-    \usepackage{makecell}
+format:
+  pdf:
+    include-in-header: |
+      \usepackage{setspace}
+      \usepackage{array}
+      \usepackage{booktabs}
+      \usepackage{multirow}
+      \usepackage{makecell}
 ---
 
 ```{r}
