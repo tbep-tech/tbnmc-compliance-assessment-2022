@@ -27,7 +27,11 @@ format:
     documentclass: scrreport
     latex-auto-install: true
     include-in-header: |
+      \usepackage{setspace}
       \usepackage{array}
+      \usepackage{booktabs}
+      \usepackage{multirow}
+      \usepackage{makecell}
 
 execute:
   echo: false
