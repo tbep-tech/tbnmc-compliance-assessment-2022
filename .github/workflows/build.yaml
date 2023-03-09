@@ -29,8 +29,6 @@ jobs:
           tinytex: true
           # uncomment below and fill to pin a version
           # version: 0.9.600
-      - name: Setup tinytex
-        uses: r-lib/actions/setup-tinytex@v2
       - name: Setup R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -49,9 +47,9 @@ jobs:
             any::knitr
             any::ftExtra
             tbeptools
-      - name: Publish to GitHub Pages (and render)
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Publish to GitHub Pages (and render)
+      #   uses: quarto-dev/quarto-actions/publish@v2
+      #   with:
+      #     target: gh-pages
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
