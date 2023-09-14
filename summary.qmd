@@ -89,23 +89,23 @@ show_chlmatrix(wqdat, params$maxyr, fml)
 ```{r}
 #| label: tbl-raotb
 #| tbl-cap: !expr ratabcap('OTB')
-ratab('OTB', params$maxyr, wqdat)
+show_ratab(bay_segment = 'OTB', yrsel = params$maxyr, epcdata = wqdat)
 ```
 
 ```{r}
 #| label: tbl-rahb
 #| tbl-cap: !expr ratabcap('HB')
-ratab('HB', params$maxyr, wqdat)
+show_ratab(bay_segment = 'HB', yrsel = params$maxyr, epcdata = wqdat)
 ```
 
 ```{r}
 #| label: tbl-ramtb
 #| tbl-cap: !expr ratabcap('MTB')
-ratab('MTB', params$maxyr, wqdat)
+show_ratab(bay_segment = 'MTB', yrsel = params$maxyr, epcdata = wqdat)
 ```
 
 ```{r}
 #| label: tbl-raltb
 #| tbl-cap: !expr ratabcap('LTB')
-ratab('LTB', params$maxyr, wqdat)
+show_ratab(bay_segment = 'LTB', yrsel = params$maxyr, epcdata = wqdat)
 ```
