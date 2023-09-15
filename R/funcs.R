@@ -12,13 +12,17 @@ ratabcap <- function(segin){
 }
 
 # header table with to, from, etc.
-headertab <- function(fsz = 13){
+headertab <- function(dt = NULL, maxyr ,fsz = 13){
+
+  if(is.null(dt))
+    dt <- as.character(Sys.Date())
 
   totab <- tibble(
     first = c('TO:', '', 'FROM:', 'DATE:', 'SUBJECT:', 'cc', '', '', '', ''),
     second = c(
       'Adam Blalock, FDEP', 'Daniel Blackman, US EPA Region 4', 'Ed Sherwood, TBEP Executive Director (NMC Facilitator)',
-      as.character(Sys.Date()), paste(params$maxyr, 'Tampa Bay Nutrient Management Compliance Assessment Results'),
+      dt,
+      paste(maxyr, 'Tampa Bay Nutrient Management Compliance Assessment Results'),
       'Ken Weaver, Jessica Mostyn, Ben Ralys, Kevin O’Donnell, Kimberly Shugar (FDEP Tallahssee)',
       'Ramandeep Kaur, Vishwas Sathe, Jessica Pein, Astrid Flores Thiebaud (FDEP Tampa)',
       'Jeaneanne M. Gettle, Wade Lehmann, Jeffrey Lerner, Nancy Laurson, Felicia Burks, Tom McGill (EPA Region 4/HQ)',

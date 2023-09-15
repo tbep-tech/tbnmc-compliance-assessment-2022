@@ -13,7 +13,7 @@ library(tibble)
 source('R/funcs.R')
 
 # table function for header
-headertab()
+headertab(dt = '2023-02-07', maxyr = params$maxyr)
 ```
 
 Source content: [here](https://github.com/tbep-tech/tbnmc-compliance-assessment-2022)
